@@ -7,3 +7,5 @@ export const createWalletCommand = async (ctx: Context) => {
         parse_mode: 'HTML',
     });
 };
+
+// Функція для перевірки балансу гаманця
