@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "module": "commonjs",
+    "@solana/web3.js": "^1.98.0",
+    "dotenv": "^16.4.7",
+    "telegraf": "^4.16.3"
+  },
+  "scripts": {
+    "start": "ts-node src/bot.ts"
+  }
+}
