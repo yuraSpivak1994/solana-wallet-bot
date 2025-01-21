@@ -1,5 +1,6 @@
 import { Context } from 'telegraf';
 import { getWalletBalance } from '../services/wallet.service';
+import { PublicKey } from '@solana/web3.js';
 
 export const balanceCommand = async (ctx: Context & { message?: { text?: string } }) => {
     const message = ctx.message?.text || '';
