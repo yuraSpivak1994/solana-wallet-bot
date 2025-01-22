@@ -12,6 +12,7 @@ export const balanceCommand = async (ctx: Context & { message?: { text?: string 
     }
 
     try {
+        console.log(address);
         const balance = await getWalletBalance(address);
         await ctx.reply(`Баланс гаманця ${address}: ${balance.toFixed(2)} SOL`);
     } catch (error) {

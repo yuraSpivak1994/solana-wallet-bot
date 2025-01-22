@@ -3,10 +3,11 @@ import { Markup } from 'telegraf';
 
 export const startCommand = async (ctx: Context) => {
     await ctx.reply(
-        'Привіт! Я бот для створення Solana гаманців. Використай кнопки нижче для виконання дій:',
+        'Greetings! I am a bot for creating Solana wallets. Use the buttons below to take action:',
         Markup.inlineKeyboard([
-            Markup.button.callback('Створити гаманець', 'create_wallet'),
-            Markup.button.callback('Перевірити баланс', 'check_balance'),
+            Markup.button.callback('Create Wallet', 'create_wallet'),
+            Markup.button.callback('Check Balance', 'check_balance'),
+            Markup.button.callback('Load Wallet', 'load_wallet')
         ])
     );
 };

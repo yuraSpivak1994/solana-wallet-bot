@@ -15,7 +15,20 @@ export const getWalletBalance = async (publicKey: string): Promise<number> => {
         const balance = await connection.getBalance(walletPublicKey); // Баланс у лампортах
         return balance / 1e9; // Переводимо баланс у SOL
     } catch (error) {
-        console.error('Помилка перевірки балансу:', error);
-        throw new Error('Неможливо отримати баланс. Перевірте адресу гаманця.');
+        console.error('Error getting wallet balance:', error);
+        throw new Error('Could not get wallet balance. Please check the wallet address.');
     }
+};
+
+// Завантаження гаманця з environment
+export const loadWalletFromEnv = (): Keypair => {
+    const publicKey = process.env.PUBLIC_KEY;
+    const privateKey = process.env.PRIVATE_KEY;
+
+    if (!publicKey || !privateKey) {
+        throw new Error('Public or private key not found in environment variables');
+    }
+    const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(privateKey, 'base64'));
+
+    return wallet;
 };
