@@ -8,7 +8,7 @@ export const startCommand = async (ctx: Context) => {
             Markup.button.callback('Create Wallet', 'create_wallet'),
             Markup.button.callback('Check Balance', 'check_balance'),
             Markup.button.callback('Load Wallet', 'load_wallet'),
-            Markup.button.callback('Airdrop Solana', 'load_airdrop'),
+            Markup.button.callback('Send Solana', 'send_solana')
         ])
     );
 };
