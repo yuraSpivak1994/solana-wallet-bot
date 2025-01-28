@@ -13,7 +13,7 @@ export const requestAirdropCommand = async (ctx: Context): Promise<void> => {
 
         const pubKey = new PublicKey(publicKey);
         await ctx.reply('Requesting airdrop...');
-        const signature = await connection.requestAirdrop(pubKey, 1e9); // 1 SOL = 1e9 лампорт
+        const signature = await connection.requestAirdrop(pubKey, 5); // 5 SOL = 1e9 лампорт
         await connection.confirmTransaction(signature);
 
         await ctx.reply('Airdrop successful! Check your wallet balance.');

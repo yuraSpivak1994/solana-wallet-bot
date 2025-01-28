@@ -7,12 +7,26 @@ export class KeyManagementService {
         this.storage = new JsonStorageService('keys.json');
     }
 
-    public saveKey(userId: number, publicKey: string, privateKey: string): void {
+    public saveKey(publicKey: string, privateKey: string): void {
         this.storage.appendData({ publicKey, privateKey });
     }
 
-    public getKey(userId: number): { publicKey: string; privateKey: string } | null {
-        const keys = this.storage.readData<Record<number, { publicKey: string; privateKey: string }>>();
-        return keys[userId] || null;
+    public getWallet(chatId: number): { publicKey: string; privateKey: string } | null {
+        try {
+            // Зчитуємо всі дані
+            const wallets = this.storage.readData<Record<number, { publicKey: string; privateKey: string }>>();
+            console.log(wallets);
+            // Перевіряємо, чи є гаманець для вказаного chatId
+            if (!wallets[chatId]) {
+                console.log(`Wallet not found for chatId: ${chatId}`);
+                return null;
+            }
+
+            // Повертаємо гаманець користувача
+            return wallets[chatId];
+        } catch (error) {
+            console.error('Error retrieving wallet:', error);
+            return null;
+        }
     }
 }

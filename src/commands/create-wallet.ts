@@ -23,7 +23,7 @@ export class CreateWalletCommand {
                 { parse_mode: 'HTML' }
             );
 
-            this.keyService.saveKey( chatId, publicKey, privateKey);
+            this.keyService.saveKey( publicKey, privateKey);
 
 
         } catch (error) {
