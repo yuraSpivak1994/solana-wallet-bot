@@ -11,22 +11,14 @@ export class KeyManagementService {
         this.storage.appendData({ publicKey, privateKey });
     }
 
-    public getWallet(chatId: number): { publicKey: string; privateKey: string } | null {
+    public getAllWallets(): { publicKey: string; privateKey: string }[] {
         try {
-            // Зчитуємо всі дані
-            const wallets = this.storage.readData<Record<number, { publicKey: string; privateKey: string }>>();
-            console.log(wallets);
-            // Перевіряємо, чи є гаманець для вказаного chatId
-            if (!wallets[chatId]) {
-                console.log(`Wallet not found for chatId: ${chatId}`);
-                return null;
-            }
-
-            // Повертаємо гаманець користувача
-            return wallets[chatId];
+            const wallets = this.storage.readData<{ publicKey: string; privateKey: string }[]>();
+            return Array.isArray(wallets) ? wallets : [];
         } catch (error) {
-            console.error('Error retrieving wallet:', error);
-            return null;
+            console.error('Error retrieving wallets:', error);
+            return [];
         }
     }
+
 }

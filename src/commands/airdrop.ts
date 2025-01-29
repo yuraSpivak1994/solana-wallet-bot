@@ -25,6 +25,7 @@ export class AirdropCommand {
             console.log('Airdrop success!');
         } catch (error) {
             console.error('❌ Error during airdrop:', error);
+
             await ctx.reply('Airdrop failed. Please try again later.');
         }
     }

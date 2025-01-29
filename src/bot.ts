@@ -8,6 +8,7 @@ import { CreateWalletCommand } from './commands/create-wallet';
 import { SendSolanaCommand } from './commands/send-sol.command';
 import { UserStateService } from './services/user-state.service';
 import { BalanceCommand } from './commands/balance';
+import { ShowWalletsCommand } from './commands/show-wallets';
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -18,6 +19,7 @@ const sendSolanaCommand = new SendSolanaCommand();
 const userStateService = new UserStateService();
 const balanceCommand = new BalanceCommand(userStateService);
 const airdropCommand = new AirdropCommand();
+const showWalletsCommand = new ShowWalletsCommand(keyService);
 
 
 // Реєструємо команди
@@ -28,6 +30,8 @@ bot.action('create_wallet', async (ctx) => createWalletCommand.execute(ctx));
 bot.action('load_wallet', loadWalletCommand);
 bot.action('check_balance', async (ctx) => balanceCommand.requestBalance(ctx));
 bot.action('load_airdrop', async (ctx) => airdropCommand.requestAirdrop(ctx));
+bot.action('show_wallets', async (ctx) => showWalletsCommand.execute(ctx));
+
 
 // Додаємо обробку кнопки
 bot.action('send_sol', (ctx) => sendSolanaCommand.executeAction(ctx));

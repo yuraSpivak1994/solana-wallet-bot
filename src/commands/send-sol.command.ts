@@ -55,6 +55,7 @@ export class SendSolanaCommand {
             }
 
             try {
+                await ctx.reply('sending...');
                 // Відправляємо SOL
                 const signature = await this.transactionService.sendSol(
                     process.env.PRIVATE_KEY!,

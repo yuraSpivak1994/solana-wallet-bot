@@ -10,6 +10,7 @@ export const startCommand = async (ctx: Context) => {
             Markup.button.callback('Load Wallet', 'load_wallet'),
             Markup.button.callback('Send Solana', 'send_sol'),
             Markup.button.callback('Request Airdrop', 'load_airdrop'),
+            Markup.button.callback('Show Wallets', 'show_wallets')
         ])
     );
 };

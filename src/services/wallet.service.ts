@@ -13,7 +13,7 @@ export const getWalletBalance = async (publicKey: string): Promise<number> => {
     try {
         const walletPublicKey = new PublicKey(publicKey);
         const balance = await connection.getBalance(walletPublicKey); // Баланс у лампортах
-        return balance / 1e9; // Переводимо баланс у SOL
+        return balance
     } catch (error) {
         console.error('Error getting wallet balance:', error);
         throw new Error('Could not get wallet balance. Please check the wallet address.');
