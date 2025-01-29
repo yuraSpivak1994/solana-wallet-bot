@@ -1,11 +1,5 @@
-import {
-    Connection,
-    Keypair,
-    PublicKey,
-    SystemProgram,
-    Transaction,
-    sendAndConfirmTransaction,
-} from '@solana/web3.js';
+import { Connection, Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import { confirmTransactions } from '../utils/transaction-utils';
 
 export class TransactionService {
     private connection: Connection;
@@ -23,31 +17,22 @@ export class TransactionService {
             const fromKeypair = Keypair.fromSecretKey(Buffer.from(fromPrivateKey, 'base64'));
             const toKey = new PublicKey(toPublicKey);
 
-            // Отримуємо актуальний blockhash
-            const { blockhash } = await this.connection.getLatestBlockhash('finalized');
-
-            const transaction = new Transaction({
-                recentBlockhash: blockhash,
-                feePayer: fromKeypair.publicKey,
-            }).add(
+            const transaction = new Transaction().add(
                 SystemProgram.transfer({
                     fromPubkey: fromKeypair.publicKey,
                     toPubkey: toKey,
-                    lamports: amount * 1e9, // Конвертуємо SOL -> лампорти
+                    lamports: amount * 1e9,
                 })
             );
 
-            // Підписуємо транзакцію
-            transaction.sign(fromKeypair);
+            const signature = await this.connection.sendTransaction(transaction, [fromKeypair]);
 
-            // Відправляємо та чекаємо підтвердження транзакції
-            const signature = await sendAndConfirmTransaction(this.connection, transaction, [fromKeypair], {
-                commitment: 'finalized',
-            });
+            // Використовуємо утилітку для підтвердження транзакції
+            await confirmTransactions(this.connection, [signature]);
 
             return signature;
         } catch (error) {
-            console.error('Error sending Solana:', error);
+            console.error('❌ Error sending Solana:', error);
             throw new Error('Failed to send Solana. Please try again.');
         }
     }
