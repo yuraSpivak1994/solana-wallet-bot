@@ -1,4 +1,11 @@
-import { Connection, Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
+import {
+    Connection,
+    Keypair,
+    PublicKey,
+    SystemProgram,
+    Transaction,
+    sendAndConfirmTransaction,
+} from '@solana/web3.js';
 
 export class TransactionService {
     private connection: Connection;
@@ -16,7 +23,13 @@ export class TransactionService {
             const fromKeypair = Keypair.fromSecretKey(Buffer.from(fromPrivateKey, 'base64'));
             const toKey = new PublicKey(toPublicKey);
 
-            const transaction = new Transaction().add(
+            // Отримуємо актуальний blockhash
+            const { blockhash } = await this.connection.getLatestBlockhash('finalized');
+
+            const transaction = new Transaction({
+                recentBlockhash: blockhash,
+                feePayer: fromKeypair.publicKey,
+            }).add(
                 SystemProgram.transfer({
                     fromPubkey: fromKeypair.publicKey,
                     toPubkey: toKey,
@@ -24,8 +37,14 @@ export class TransactionService {
                 })
             );
 
-            const signature = await this.connection.sendTransaction(transaction, [fromKeypair]);
-            await this.connection.confirmTransaction(signature, 'confirmed');
+            // Підписуємо транзакцію
+            transaction.sign(fromKeypair);
+
+            // Відправляємо та чекаємо підтвердження транзакції
+            const signature = await sendAndConfirmTransaction(this.connection, transaction, [fromKeypair], {
+                commitment: 'finalized',
+            });
+
             return signature;
         } catch (error) {
             console.error('Error sending Solana:', error);
