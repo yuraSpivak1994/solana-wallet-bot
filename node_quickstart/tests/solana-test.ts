@@ -1,6 +1,6 @@
 import { Keypair } from '@solana/web3.js';
-import { getWalletBalance } from '../services/wallet.service';
-import { sendSol } from '../commands/send-sol';
+import { getWalletBalance } from '../../src/services/wallet.service';
+import { sendSol } from '../../src/commands/send-sol';
 
 // Приватний ключ відправника у форматі Base64
 const privateKeyBase64 = 'Ejx//j0UU0tE5ntNgQvxuHwDP4EH+3rkV95tYCDhSW/Aq9/bWBURQ4fLZkqyZs2rq5AY7lIQfDfjSIjco5WsxA==';
