@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
-import { createWallet } from '../services/wallet.service'; // Сервіс для створення гаманця
-import { KeyManagementService } from '../services/key-management.service';
+import { createWallet } from '../../services/wallet.service'; // Сервіс для створення гаманця
+import { KeyManagementService } from '../../services/key-management.service';
 
 export class CreateWalletCommand {
     private keyService: KeyManagementService;

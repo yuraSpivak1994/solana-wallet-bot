@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId, Collection, WithId } from '../../node_quickstart/node_modules/mongodb';
+import { MongoClient, ObjectId, Collection } from 'mongodb';
 import dotenv from 'dotenv';
 import { UserWalletData } from '../models/user.model';
 

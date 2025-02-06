@@ -1,4 +1,4 @@
-import { getWalletBalance } from '../../src/services/wallet.service';
+import { getWalletBalance } from '../../services/wallet.service';
 
 // Публічний ключ одержувача
 const recipientPublicKey = 'Dy7HWPFRsHK3Np6Pk696itVTXA24fpN2pwofc2Afaa6P';

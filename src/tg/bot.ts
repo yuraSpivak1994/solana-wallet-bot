@@ -1,12 +1,12 @@
 import { Telegraf } from 'telegraf';
-import { BOT_TOKEN } from './config';
+import { BOT_TOKEN } from '../config';
 import { startCommand } from './commands/start';
 import { AirdropCommand } from './commands/airdrop';
 import { loadWalletCommand } from './commands/load-wallet';
-import { KeyManagementService } from './services/key-management.service';
+import { KeyManagementService } from '../services/key-management.service';
 import { CreateWalletCommand } from './commands/create-wallet';
 import { SendSolanaCommand } from './commands/send-sol.command';
-import { UserStateService } from './services/user-state.service';
+import { UserStateService } from '../services/user-state.service';
 import { BalanceCommand } from './commands/balance';
 import { ShowWalletsCommand } from './commands/show-wallets';
 

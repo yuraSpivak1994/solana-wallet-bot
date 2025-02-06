@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
-import { TransactionService } from '../services/transaction.service';
-import { UserStateService } from '../services/user-state.service';
+import { TransactionService } from '../../services/transaction.service';
+import { UserStateService } from '../../services/user-state.service';
 
 export class SendSolanaCommand {
     private transactionService: TransactionService;

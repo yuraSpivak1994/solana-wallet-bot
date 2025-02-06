@@ -1,5 +1,5 @@
 import { Context } from 'telegraf';
-import { loadWalletFromEnv } from '../services/wallet.service';
+import { loadWalletFromEnv } from '../../services/wallet.service';
 
 export const loadWalletCommand = async (ctx: Context): Promise<void> => {
     try {

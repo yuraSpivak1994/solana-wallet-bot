@@ -3,11 +3,11 @@
     "@solana/web3.js": "^1.98.0",
     "bs58": "^6.0.0",
     "dotenv": "^16.4.7",
+    "mongodb": "6.12",
     "telegraf": "^4.16.3"
   },
   "scripts": {
-    "start": "ts-node src/bot.ts",
-    "test:solana-wallet": "ts-node node_quickstart/tests/solana-wallet-test.ts"
-
+    "start": "ts-node src/tg/bot.ts",
+    "test:solana-wallet": "ts-node src/mongo/tests/solana-wallet-test.ts"
   }
 }

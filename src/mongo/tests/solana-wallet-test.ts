@@ -1,5 +1,5 @@
 import { Keypair } from '@solana/web3.js';
-import { prepareKeyToMongoDB, decodeKeyFromMongoDB } from '../../src/utils/key-encoding';
+import { prepareKeyToMongoDB, decodeKeyFromMongoDB } from '../../utils/key-encoding';
 const { MongoClient } = require('mongodb');
 import dotenv from 'dotenv';
 dotenv.config();

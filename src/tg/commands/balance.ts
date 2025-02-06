@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
-import { getWalletBalance } from '../services/wallet.service';
-import { UserStateService } from '../services/user-state.service';
+import { getWalletBalance } from '../../services/wallet.service';
+import { UserStateService } from '../../services/user-state.service';
 //@ts-ignore
 import bs58 from 'bs58';
 

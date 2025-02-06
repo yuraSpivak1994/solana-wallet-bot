@@ -1,4 +1,4 @@
-import { prepareKeyToMongoDB, decodeKeyFromMongoDB } from '../../src/utils/key-encoding';
+import { prepareKeyToMongoDB, decodeKeyFromMongoDB } from '../../utils/key-encoding';
 import bs58 from 'bs58';
 
 function testKeyEncoding() {

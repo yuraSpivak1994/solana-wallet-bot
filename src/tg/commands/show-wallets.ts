@@ -1,5 +1,5 @@
 import { Context } from 'telegraf';
-import { KeyManagementService } from '../services/key-management.service';
+import { KeyManagementService } from '../../services/key-management.service';
 
 export class ShowWalletsCommand {
     private keyService: KeyManagementService;
