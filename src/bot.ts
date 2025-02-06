@@ -14,7 +14,7 @@ const bot = new Telegraf(BOT_TOKEN);
 
 // Ініціалізуємо сервіси
 const keyService = new KeyManagementService();
-const createWalletCommand = new CreateWalletCommand(keyService);
+const createWalletCommand = new CreateWalletCommand();
 const sendSolanaCommand = new SendSolanaCommand();
 const userStateService = new UserStateService();
 const balanceCommand = new BalanceCommand(userStateService);

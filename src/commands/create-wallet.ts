@@ -5,19 +5,19 @@ import { KeyManagementService } from '../services/key-management.service';
 export class CreateWalletCommand {
     private keyService: KeyManagementService;
 
-    constructor(keyService: KeyManagementService) {
-        this.keyService = keyService;
+    constructor() {
+        this.keyService = new KeyManagementService();
     }
 
     public async  execute(ctx: Context): Promise<void> {
         try {
-            const chatId = ctx.chat?.id;
+            const chatId: number | undefined = ctx.chat?.id;
             if (!chatId) {
                 await ctx.reply('Could not retrieve chat ID. Please try again.');
                 return;
             }
 
-            const { publicKey, privateKey } = createWallet();
+            const { publicKey, privateKey } = await createWallet(chatId);
             await ctx.reply(
                 `Wallet successfully created!\n<b>Public Key:</b> \n<code>${publicKey}</code>\n<b>Private Key:</b> \n<code>${privateKey}</code>\n`,
                 { parse_mode: 'HTML' }

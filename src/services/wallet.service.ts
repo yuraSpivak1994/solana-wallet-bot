@@ -1,13 +1,23 @@
 import { clusterApiUrl, Connection, Keypair, PublicKey } from '@solana/web3.js';
+import { WalletStorageService } from './wallet-storage.service';
+import { prepareKeyToMongoDB } from '../utils/key-encoding';
 const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
 
 // Функція для створення нового гаманця
-export const createWallet = () => {
-    const wallet = Keypair.generate(); // Генеруємо пару ключів
-    const publicKey = wallet.publicKey.toBase58();
-    const privateKey = Buffer.from(wallet.secretKey).toString('base64');
-    return { publicKey, privateKey };
-};
+const walletStorageService = new WalletStorageService();
+
+export async function createWallet(chatId: number): Promise<{ publicKey: string; privateKey: string }> {
+    // Генеруємо новий ключ Solana
+    const keypair = Keypair.generate();
+    const publicKey = keypair.publicKey.toBase58();
+    const privateKeyEncoded = prepareKeyToMongoDB(keypair.secretKey);
+
+    // Зберігаємо у MongoDB
+    await walletStorageService.saveWallet(chatId.toString(), publicKey, privateKeyEncoded);
+
+    console.log('✅ New Solana Wallet Created & Stored');
+    return { publicKey, privateKey: privateKeyEncoded };
+}
 
 export const getWalletBalance = async (publicKey: string): Promise<number> => {
     try {
