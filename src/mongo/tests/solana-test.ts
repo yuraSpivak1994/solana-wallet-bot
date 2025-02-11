@@ -1,5 +1,5 @@
 import { Keypair } from '@solana/web3.js';
-import { getWalletBalance } from '../../services/wallet.service';
+import { getWalletBalance } from '../../services/wallet-test.service';
 import { sendSol } from '../../tg/commands/send-sol';
 
 // Приватний ключ відправника у форматі Base64

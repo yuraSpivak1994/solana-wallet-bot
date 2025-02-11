@@ -1,12 +1,15 @@
 import { Context } from 'telegraf';
-import { createWallet } from '../../services/wallet.service'; // Сервіс для створення гаманця
+import { createWallet } from '../../services/wallet-test.service'; // Сервіс для створення гаманця
 import { KeyManagementService } from '../../services/key-management.service';
+import { WalletService } from '../../services/wallet.service';
 
 export class CreateWalletCommand {
     private keyService: KeyManagementService;
+    private walletService = new WalletService();
 
     constructor() {
         this.keyService = new KeyManagementService();
+        this.walletService = new WalletService();
     }
 
     public async  execute(ctx: Context): Promise<void> {

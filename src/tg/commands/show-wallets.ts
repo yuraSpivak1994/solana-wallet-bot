@@ -1,16 +1,18 @@
 import { Context } from 'telegraf';
 import { KeyManagementService } from '../../services/key-management.service';
+import { LoadWalletCommand } from './load-wallet.command';
 
 export class ShowWalletsCommand {
-    private keyService: KeyManagementService;
+    private loadWalletCommand: LoadWalletCommand;
 
-    constructor(keyService: KeyManagementService) {
-        this.keyService = keyService;
+    constructor() {
+        this.loadWalletCommand = new LoadWalletCommand();
     }
 
-    public async execute(ctx: Context): Promise<void> {
+    public async showWallets(ctx: Context): Promise<void> {
+        console.log(ctx);
         try {
-            const wallets = this.keyService.getAllWallets();
+            const wallets = await this.loadWalletCommand.loadAllWallets(ctx);
 
             if (!wallets.length) {
                 await ctx.reply('No wallets found.');

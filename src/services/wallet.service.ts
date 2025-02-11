@@ -1,44 +1,39 @@
-import { clusterApiUrl, Connection, Keypair, PublicKey } from '@solana/web3.js';
-import { WalletStorageService } from './wallet-storage.service';
-import { prepareKeyToMongoDB } from '../utils/key-encoding';
-const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+import { Collection, ObjectId } from 'mongodb';
+import { UserWalletData } from '../models/user.model';
+import { ConnectService } from './connect.service';
 
-// Функція для створення нового гаманця
-const walletStorageService = new WalletStorageService();
 
-export async function createWallet(chatId: number): Promise<{ publicKey: string; privateKey: string }> {
-    // Генеруємо новий ключ Solana
-    const keypair = Keypair.generate();
-    const publicKey = keypair.publicKey.toBase58();
-    const privateKeyEncoded = prepareKeyToMongoDB(keypair.secretKey);
+export class WalletService {
+    private connectService: ConnectService;
 
-    // Зберігаємо у MongoDB
-    await walletStorageService.saveWallet(chatId.toString(), publicKey, privateKeyEncoded);
+    constructor() {
+        this.connectService = new ConnectService();
+    }
+    /**
+     * Save a new wallet for a user
+     */
+    async saveWallet(chatId: string, publicKey: string, privateKeyBase64: string): Promise<void> {
+        const collection = await this.connectService.connect();
 
-    console.log('✅ New Solana Wallet Created & Stored');
-    return { publicKey, privateKey: privateKeyEncoded };
+
+        await collection.updateOne(
+            { _id: chatId as unknown as ObjectId },
+            {$push: { wallets: { publicKey, privateKey: privateKeyBase64 } }},
+            { upsert: true }
+        ).catch((error) => {
+            console.error('Error saving wallet to MongoDB:', error);
+        })
+        console.log(`✅ Wallet saved to MongoDB for chatId: ${chatId}`);
+    }
+
+    /**
+     * Get all wallets for a user
+     */
+    async getWallets(chatId: string): Promise<{ publicKey: string; privateKey: string }[]> {
+        const collection: Collection<Document> = await this.connectService.connect();
+        console.log(chatId);
+        const userData: UserWalletData | null = await collection.findOne<UserWalletData>({ _id: chatId as unknown as ObjectId});
+
+        return userData?.wallets || [];
+    }
 }
-
-export const getWalletBalance = async (publicKey: string): Promise<number> => {
-    try {
-        const walletPublicKey = new PublicKey(publicKey);
-        const balance = await connection.getBalance(walletPublicKey); // Баланс у лампортах
-        return balance
-    } catch (error) {
-        console.error('Error getting wallet balance:', error);
-        throw new Error('Could not get wallet balance. Please check the wallet address.');
-    }
-};
-
-// Завантаження гаманця з environment
-export const loadWalletFromEnv = (): Keypair => {
-    const publicKey = process.env.PUBLIC_KEY;
-    const privateKey = process.env.PRIVATE_KEY;
-
-    if (!publicKey || !privateKey) {
-        throw new Error('Public or private key not found in environment variables');
-    }
-    const wallet: Keypair = Keypair.fromSecretKey(Buffer.from(privateKey, 'base64'));
-
-    return wallet;
-};
