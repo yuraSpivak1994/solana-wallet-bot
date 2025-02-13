@@ -1,5 +1,4 @@
 import { Context } from 'telegraf';
-import { KeyManagementService } from '../../services/key-management.service';
 import { LoadWalletCommand } from './load-wallet.command';
 
 export class ShowWalletsCommand {
@@ -21,7 +20,7 @@ export class ShowWalletsCommand {
 
             let message = '🔑 Your saved wallets:\n\n';
             wallets.forEach((wallet, index) => {
-                message += `<b>Wallet ${index + 1}:</b>\n<code>${wallet.publicKey}</code>\n\n`;
+                message += `<b>Wallet ${index + 1}:</b>\n<code>${wallet.privateKey}</code>\n\n`;
             });
 
             await ctx.reply(message, { parse_mode: 'HTML' });

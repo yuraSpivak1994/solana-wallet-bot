@@ -18,6 +18,7 @@ const userStateService = new UserStateService();
 const balanceCommand = new BalanceCommand(userStateService);
 const airdropCommand = new AirdropCommand();
 const showWalletsCommand = new ShowWalletsCommand();
+const loadWalletCommand = new LoadWalletCommand();
 
 
 // Реєструємо команди
@@ -28,6 +29,7 @@ bot.action('create_wallet', async (ctx) => createWalletCommand.execute(ctx));
 bot.action('check_balance', async (ctx) => balanceCommand.requestBalance(ctx));
 bot.action('load_airdrop', async (ctx) => airdropCommand.requestAirdrop(ctx));
 bot.action('show_wallets', async (ctx) => showWalletsCommand.showWallets(ctx));
+// bot.action('load_wallet', async (ctx) => loadWalletCommand.loadWallet(ctx));
 
 
 // Додаємо обробку кнопки
